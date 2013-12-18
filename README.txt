@@ -12,8 +12,7 @@ and all future compile requests fail until the server is restarted.
 
 HOW TO USE
 
-- See https://tickets.smartertravelmedia.com/wiki/display/DEV/Compass+and+easy+sprites for an example of how to setup
- config.rb for compass to get usable file paths
+- put compass config.rb in the project base directory
 
 - Example configuration:
 
@@ -49,4 +48,4 @@ preProcessors=compassCss.scss
 
 - Specifying where gems are installed:
  -- in wro.properties, add
-        gemHome=<path relative to probject base directory>
+        gemHome=<path relative to project base directory>
