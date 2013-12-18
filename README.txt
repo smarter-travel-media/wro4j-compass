@@ -1,4 +1,19 @@
+REASON FORKED:
+
+1)  There was a race condition when the CompassCssPreProcessor that occurred when this plugin is used in a runtime setup with
+the wro filter. The issue in the original Compass plugin can be reproduced by creating a sample page that loads 2 different
+wro groups on the first load. The result is that you will see the compiling message twice. While the files are
+not compiled twice two compilers are created. In rare cases this causes competition for gems resulting in a null pointer
+and all future compile requests fail until the server is restarted.
+
+2)  Lock down the version # of gems installed for use in compiling to prevent inconsistencies between production and dev.
+
+3)  We wanted to add support for susy see http://susy.oddbird.net/
+
 HOW TO USE
+
+- See https://tickets.smartertravelmedia.com/wiki/display/DEV/Compass+and+easy+sprites for an example of how to setup
+ config.rb for compass to get usable file paths
 
 - Example configuration:
 
@@ -31,3 +46,7 @@ HOW TO USE
 And in your wro.properties, add
 
 preProcessors=compassCss.scss
+
+- Specifying where gems are installed:
+ -- set ENV variable WRO_GEM_HOME (the directory will be created but make sure that the permissions are correct.)
+ -- The default gem directory is '/tmp/gems'

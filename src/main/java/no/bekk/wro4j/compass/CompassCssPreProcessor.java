@@ -1,6 +1,9 @@
 package no.bekk.wro4j.compass;
 
 import org.apache.commons.io.IOUtils;
+import org.jruby.CompatVersion;
+import org.jruby.RubyInstanceConfig;
+import org.jruby.embed.ScriptingContainer;
 import ro.isdc.wro.WroRuntimeException;
 import ro.isdc.wro.config.metadata.MetaDataFactory;
 import ro.isdc.wro.manager.factory.standalone.StandaloneContext;
@@ -24,6 +27,28 @@ public class CompassCssPreProcessor implements ResourcePreProcessor {
     @Inject
     private MetaDataFactory metaDataFactory;
 
+
+    private final static CompassCompiler compiler;
+    /**
+     * this is all done in a static block because the constructor is also called multiple times. and we only ever want
+     * to initialize the compiler once. Causes race condition when used with a filter. see the readme file for more details.
+     */
+    static {
+
+        ScriptingContainer container = new ScriptingContainer();
+        container.setCompileMode(RubyInstanceConfig.CompileMode.JIT);
+        container.setCompatVersion(CompatVersion.RUBY1_9);
+
+        Object reciver;
+        try {
+            reciver = container.runScriptlet(IOUtils.toString(CompassCssPreProcessor.class.getResource("/wro4j_compass.rb")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new WroRuntimeException(e.getMessage(), e);
+        }
+        compiler = container.getInstance(reciver, CompassCompiler.class);
+    }
+
     @Override
 	public void process(Resource resource, Reader reader, Writer writer) throws IOException {
 
@@ -32,12 +57,11 @@ public class CompassCssPreProcessor implements ResourcePreProcessor {
         File projectBaseDir = compassSettings.getProjectBaseDir();
         StandaloneContext context = compassSettings.getStandaloneContext();
         String compassBaseDir = compassSettings.getCompassBaseDir();
-        String gemHome = compassSettings.getGemHome();
 
 		final String content = IOUtils.toString(reader);
 		
 		try {
-			String result =  new CompassEngine(computePath(projectBaseDir, compassBaseDir), computePath(projectBaseDir, gemHome)).process(content, computeResourcePath(resource, context, projectBaseDir));
+			String result =  new CompassEngine(compiler, computePath(projectBaseDir, compassBaseDir)).process(content, computeResourcePath(resource, context, projectBaseDir));
 			writer.write(result);
 		} catch (final WroRuntimeException e) {
 			onException(e);
@@ -68,5 +92,4 @@ public class CompassCssPreProcessor implements ResourcePreProcessor {
             return new File(projectBaseDir, relativePath).getAbsolutePath();
         }
     }
-
 }

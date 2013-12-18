@@ -11,15 +11,15 @@ import ro.isdc.wro.util.StopWatch;
 
 public class CompassEngine {
 
-    public static ScriptingContainer container;
-    private String compassBaseDir;
-    private static CompassCompiler compiler;
-    private final static Logger LOG = LoggerFactory.getLogger(CompassEngine.class);
-    private String gemHome;
 
-    public CompassEngine(String compassBaseDir, String gemHome) {
+    private String compassBaseDir;
+    private final CompassCompiler compiler;
+    private final static Logger LOG = LoggerFactory.getLogger(CompassEngine.class);
+
+
+    public CompassEngine(CompassCompiler compiler, String compassBaseDir) {
+        this.compiler = compiler;
         this.compassBaseDir = compassBaseDir;
-        this.gemHome = gemHome;
     }
 
     public String process(String content, String realFileName) {
@@ -27,16 +27,6 @@ public class CompassEngine {
 		try {
 
 			stopWatch.start("process compass");
-            if(container == null) {
-                container = new ScriptingContainer();
-                container.setCompileMode(RubyInstanceConfig.CompileMode.JIT);
-                container.setCompatVersion(CompatVersion.RUBY1_9);
-                System.out.println("JRuby Scripting Compile mode: " + container.getCompileMode());
-                System.out.println("JRuby supported version: " + container.getSupportedRubyVersion());
-                container.put("$gem_home", gemHome);
-                Object reciver = container.runScriptlet(IOUtils.toString(getClass().getResource("/wro4j_compass.rb")));
-                compiler = container.getInstance(reciver, CompassCompiler.class);
-            }
 
             return compiler.compile(compassBaseDir, content.replace("'", "\""), realFileName);
 
