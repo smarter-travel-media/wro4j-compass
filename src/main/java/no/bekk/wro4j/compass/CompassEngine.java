@@ -27,11 +27,9 @@ public class CompassEngine {
 		try {
 
 			stopWatch.start("process compass");
-
             return compiler.compile(compassBaseDir, content.replace("'", "\""), realFileName);
 
 		} catch (Exception e) {
-            e.printStackTrace();
 			throw new WroRuntimeException(e.getMessage(), e);
 
         } finally {

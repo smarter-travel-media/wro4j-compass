@@ -9,6 +9,7 @@ public class CompassSettings {
     private String compassBaseDir;
     private File projectBaseDir;
     private String gemHome;
+    private CompassCompiler compiler;
 
     public String getCompassBaseDir() {
         return compassBaseDir;
@@ -40,5 +41,13 @@ public class CompassSettings {
 
     public void setStandaloneContext(StandaloneContext standaloneContext) {
         this.standaloneContext = standaloneContext;
+    }
+
+    public CompassCompiler getCompiler() {
+        return compiler;
+    }
+
+    public void setCompiler(CompassCompiler compiler) {
+        this.compiler = compiler;
     }
 }

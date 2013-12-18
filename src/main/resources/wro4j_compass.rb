@@ -1,15 +1,11 @@
-if ENV['WRO_GEM_HOME'] == nil
-  ENV['WRO_GEM_HOME'] = "/tmp/gems"
-end
-
-ENV['GEM_HOME'] = ENV['WRO_GEM_HOME']
-
-puts "Gem home: #{ENV['GEM_HOME']}"
+ENV['GEM_HOME'] = $gem_home
+puts "Gem home: #{$gem_home}"
 
 require 'rubygems'
 require 'rubygems/dependency_installer'
 
 required_gems = Array[['sass','3.2.12'],['compass', '0.12.2'],['compass-rails','1.1.2'], ['susy','1.0.9']]
+
 if !File.exist?(ENV['GEM_HOME'])
   gem_installer = Gem::DependencyInstaller.new
   puts "GEM_HOME does not exist. Installing gems"

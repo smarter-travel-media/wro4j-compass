@@ -48,5 +48,5 @@ And in your wro.properties, add
 preProcessors=compassCss.scss
 
 - Specifying where gems are installed:
- -- set ENV variable WRO_GEM_HOME (the directory will be created but make sure that the permissions are correct.)
- -- The default gem directory is '/tmp/gems'
+ -- in wro.properties, add
+        gemHome=<path relative to probject base directory>
