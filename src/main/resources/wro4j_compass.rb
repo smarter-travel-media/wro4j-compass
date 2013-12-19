@@ -4,11 +4,15 @@ puts "Gem home: #{$gem_home}"
 require 'rubygems'
 require 'rubygems/dependency_installer'
 
-required_gems = Array[['sass','3.2.12'],['compass', '0.12.2'],['compass-rails','1.1.2'], ['susy','1.0.9']]
+required_gems = Array[['sass',"#{$vSass}"],
+                      ['compass', "#{$vCompass}"],
+                      ['compass-rails',"#{$vCompassRails}"],
+                      ['susy',"#{$vSusy}"]]
 
 if !File.exist?(ENV['GEM_HOME'])
   gem_installer = Gem::DependencyInstaller.new
-  puts "GEM_HOME does not exist. Installing gems"
+  puts "GEM_HOME does not exist. Installing gems: \n"
+  puts "#{required_gems.to_s}\n"
   required_gems.each{|required_gem|
     gem_installer.install(required_gem[0],required_gem[1])
   }

@@ -1,7 +1,7 @@
 REASON FORKED:
 
-1)  There was a race condition when the CompassCssPreProcessor that occurred when this plugin is used in a runtime setup with
-the wro filter. The issue in the original Compass plugin can be reproduced by creating a sample page that loads 2 different
+1)  There was a race condition in the CompassCssPreProcessor that occurred when the plugin is used as
+part of a runtime solution. The issue in the original Compass plugin can be reproduced by creating a sample page that loads 2 different
 wro groups on the first load. The result is that you will see the compiling message twice. While the files are
 not compiled twice two compilers are created. In rare cases this causes competition for gems resulting in a null pointer
 and all future compile requests fail until the server is restarted.
@@ -49,3 +49,21 @@ preProcessors=compassCss.scss
 - Specifying where gems are installed:
  -- in wro.properties, add
         gemHome=<path relative to project base directory>
+- Gem versions:
+    By Default this now installs only:
+        Sass            3.2.12
+        Compass         0.12.2
+        Compass-rails   1.1.2
+        Susy            1.0.9
+    To customize gem versions add:
+        vSass=<version>
+        vCompass=<version>
+        vCompassRails=<version>
+        vSusy=<version>
+    in wro.properties
+
+TROUBLESHOOTING:
+    NoClassDefFoundError: org/w3c/dom/ElementTraversal:
+        Add xml-apis-2.10.0.jar to the class path.
+
+
