@@ -16,7 +16,6 @@ public class CompassConfigurableRuntimeWroManagerFactory extends ConfigurableWro
         final ro.isdc.wro.config.metadata.MetaDataFactory parent = super.newMetaDataFactory();
         final Map<String, Object> parentProps = parent.create();
         Properties props = newConfigProperties();
-        System.out.println(props.getClass());
         File projectBaseDir = computeProjectDir();
 
         return new MetaDataFactoryUtil().createMetaDataFactory(parentProps, props, projectBaseDir);
