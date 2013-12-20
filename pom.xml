@@ -13,6 +13,7 @@
     <properties>
         <wro4j.version>1.7.0</wro4j.version>
         <jruby.version>1.7.3</jruby.version>
+        <xerces.version>2.10.0</xerces.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,13 @@
             <artifactId>jruby-complete</artifactId>
             <version>${jruby.version}</version>
         </dependency>
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>${xerces.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
     </dependencies>
     <build>
         <plugins>

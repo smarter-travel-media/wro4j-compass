@@ -62,8 +62,5 @@ preProcessors=compassCss.scss
         vSusy=<version>
     in wro.properties
 
-TROUBLESHOOTING:
-    NoClassDefFoundError: org/w3c/dom/ElementTraversal:
-        Add xml-apis-2.10.0.jar to the class path.
 
 
