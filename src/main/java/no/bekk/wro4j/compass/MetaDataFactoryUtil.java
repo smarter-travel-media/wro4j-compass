@@ -90,6 +90,14 @@ public class MetaDataFactoryUtil {
 
         String compassBaseDir = props.getProperty("compassBaseDir");
         String gemHome = props.getProperty("gemHome", (compassBaseDir != null ? compassBaseDir + "./gems" : null));
+        String projectDirPath = props.getProperty("compassProjectDir", null);
+
+        System.out.println("Using configured project dir: " + projectDirPath);
+        if (projectDirPath != null) {
+
+            projectBaseDir = new File(projectDirPath);
+        }
+
         Map<String, String> gemVersions = getGemVersions(props);
         CompassSettings settings = getCompassSettings(projectBaseDir, compassBaseDir, gemHome);
         if (context != null) {

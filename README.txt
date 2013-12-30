@@ -46,6 +46,12 @@ And in your wro.properties, add
 
 preProcessors=compassCss.scss
 
+- configuring a custom project home (this is where the compass compiler is run from).
+ -- in wro.properties, add
+    compassProjectDir=<full path>
+    it is important to realize that this will be the base path for gemHome and resolving compile time
+    resources.
+
 - Specifying where gems are installed:
  -- in wro.properties, add
         gemHome=<path relative to project base directory>
